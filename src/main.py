@@ -1,14 +1,13 @@
+import os
+import uvicorn
 from fastapi import FastAPI
-from src.whatsapp import router as whatsapp_router
-from src.auth import router as auth_router
-from src.billing import router as billing_router
 
 app = FastAPI()
 
-app.include_router(whatsapp_router, prefix="/whatsapp", tags=["whatsapp"])
-app.include_router(auth_router, prefix="/auth", tags=["auth"])
-app.include_router(billing_router, prefix="/billing", tags=["billing"])
-
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to leaflensWhatsapp"}
+    return {"message": "LeafLens API is running!"}
+
+if __name__ == "__main__":
+    PORT = int(os.getenv("PORT", 8000))  # Use Railway's assigned port
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
